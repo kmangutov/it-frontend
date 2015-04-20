@@ -14,6 +14,7 @@ angular.module('frontendApp')
         height: '@',
         start: '@',
         end: '@',
+        legend: '='
       },
       controller: ['$scope', 'StocksService', function($scope, StocksService) {
 
@@ -69,22 +70,25 @@ angular.module('frontendApp')
             .attr('class', 'line')
             .attr('d', valueline(data.query.results.quote));
 
-          svg.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0, ' + height + ')')
-            .call(xAxis);
+          if(legend) {
 
-          svg.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis);
+            svg.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0, ' + height + ')')
+              .call(xAxis);
 
-          svg.append('text')
-            .attr('class', 'stock')
-            .attr('x', width / 2)
-            .attr('y', margin.top / 2)
-            .attr('text-anchor', 'middle')
-            .style('font-size', '16px')
-            .text($scope.symbol);
+            svg.append('g')
+              .attr('class', 'y axis')
+              .call(yAxis);
+
+            svg.append('text')
+              .attr('class', 'stock')
+              .attr('x', width / 2)
+              .attr('y', margin.top / 2)
+              .attr('text-anchor', 'middle')
+              .style('font-size', '16px')
+              .text($scope.symbol);
+          }
         }
 
         console.log("SYMBOL: " + $scope.symbol);
