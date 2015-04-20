@@ -1,5 +1,6 @@
 'use strict';
 
+//lots of help from https://gist.github.com/d3noob/9576689
 
 angular.module('frontendApp')
   .directive('tickerChart', function () {
@@ -7,12 +8,23 @@ angular.module('frontendApp')
     return {
       restrict: 'E',
       templateUrl: 'views/directives/tickerChart.html',
+      scope: {
+        symbol: '@',
+        width: '@',
+        height: '@',
+        start: '@',
+        end: '@',
+      },
       controller: ['$scope', 'StocksService', function($scope, StocksService) {
+
+        console.log("width: " + $scope.width);
+        console.log("symbol: " + $scope.symbol);
+        console.log("start: " + $scope.start);
 
         // Set the dimensions of the graph
         var margin = {top: 30, right: 40, bottom: 30, left: 50},
-            width = 600 - margin.left - margin.right,
-            height = 270 - margin.top - margin.bottom;
+            width = $scope.width - margin.left - margin.right,
+            height = $scope.height - margin.top - margin.bottom;
 
         // Parse the date / time
         var parseDate = d3.time.format("%Y-%m-%d").parse;
@@ -56,9 +68,27 @@ angular.module('frontendApp')
           svg.append('path')
             .attr('class', 'line')
             .attr('d', valueline(data.query.results.quote));
+
+          svg.append('g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0, ' + height + ')')
+            .call(xAxis);
+
+          svg.append('g')
+            .attr('class', 'y axis')
+            .call(yAxis);
+
+          svg.append('text')
+            .attr('class', 'stock')
+            .attr('x', width / 2)
+            .attr('y', margin.top / 2)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '16px')
+            .text($scope.symbol);
         }
 
-        StocksService.get().success(function(data) {
+        console.log("SYMBOL: " + $scope.symbol);
+        StocksService.get($scope.symbol, $scope.start, $scope.end).success(function(data) {
           updateChart(data);
         });
 

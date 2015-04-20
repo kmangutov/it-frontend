@@ -6,11 +6,19 @@ path {
   fill: none;
 }
 
+body {
+  font: 12px Arial;
+}
+
 .axis {
   shape-rendering: crispEdges;
 }
 
 .x.axis line {
+  stroke: lightgrey;
+}
+
+.y.axis line {
   stroke: lightgrey;
 }
 
@@ -22,9 +30,12 @@ path {
   display: none;
 }
 
-.y.axis line, .y.axis path {
-  fill: none;
-  stroke: #000;
+.y.axis path { 
+  display: none;
+}
+
+.y.axis .minor {
+  stroke-opacity: .5;
 }
 </style>
 
@@ -32,5 +43,3 @@ path {
 
 <h2>Hello this is a ticker chart</h2>
 <svg id="graph"></svg>
-
-{{data}}
