@@ -26,6 +26,10 @@ angular
         templateUrl: 'views/portfolios.html',
         controller: 'PortfoliosCtrl'
       })
+      .when('/portfolios/:id', {
+        templateUrl: 'views/portfolio-detail.html',
+        controller: 'PortfolioDetailCtrl'
+      })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'

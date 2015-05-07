@@ -1,0 +1,23 @@
+
+
+@import url('http://fonts.googleapis.com/css?family=Lato:100,300,400,300light|Monsterrat:400|Oswald:300,400|Bree+Serif|Merriweather|Vollkorn');
+
+$font-primary: Monsterrat, sans-serif;//ato, sans-serif;
+$font-secondary: Merriweather, serif;
+
+.font-primary {
+
+  font-family: $font-primary !important;
+}
+
+.font-secondary {
+
+  font-family: $font-secondary !important;
+}
+
+.title {
+
+  @extend .font-primary;
+  font-size: 32px !important;
+  font-weight: 100;
+}

@@ -12,5 +12,6 @@ angular.module('frontendApp')
 
     StocksService.get().success(function(data) {
       $scope.title = data;
+      console.log(JSON.stringify(data));
     });
   }]);

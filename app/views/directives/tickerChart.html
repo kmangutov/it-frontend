@@ -37,9 +37,18 @@ body {
 .y.axis .minor {
   stroke-opacity: .5;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: auto;
+}
+
 </style>
-
-
-
-<h2>Hello this is a ticker chart</h2>
-<svg id="graph"></svg>
+<div class="flex-row">
+    <span ng-model="symbol">n/a</span>
+    <br>
+    <!--<span ng-model="string-close">n/a</span>-->
+    <div><svg id="graph"></svg></div>
+</div>

@@ -14,13 +14,18 @@ angular.module('frontendApp')
         height: '@',
         start: '@',
         end: '@',
-        legend: '='
+        legend: '=',
+        close: '=?'
       },
       controller: ['$scope', 'StocksService', function($scope, StocksService) {
 
-        console.log("width: " + $scope.width);
+        $scope.close = $scope.close || false;
+        //$scope.string-ticker = $scope.symbol;
+        //$scope.string-close = '$243.21';
+
+        /*console.log("width: " + $scope.width);
         console.log("symbol: " + $scope.symbol);
-        console.log("start: " + $scope.start);
+        console.log("start: " + $scope.start);*/
 
         // Set the dimensions of the graph
         var margin = {top: 30, right: 40, bottom: 30, left: 50},
@@ -28,17 +33,17 @@ angular.module('frontendApp')
             height = $scope.height - margin.top - margin.bottom;
 
         // Parse the date / time
-        var parseDate = d3.time.format("%Y-%m-%d").parse;
+        var parseDate = d3.time.format('%Y-%m-%d').parse;
 
         // Set the ranges
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
 
         var xAxis = d3.svg.axis().scale(x)
-            .orient("bottom").ticks(5);
+            .orient('bottom').ticks(5);
 
         var    yAxis = d3.svg.axis().scale(y)
-            .orient("left").ticks(5);
+            .orient('left').ticks(5);
 
         var valueline = d3.svg.line()
             .x(function(d) { return x(d.date); })
@@ -70,7 +75,7 @@ angular.module('frontendApp')
             .attr('class', 'line')
             .attr('d', valueline(data.query.results.quote));
 
-          if(legend) {
+          if($scope.legend) {
 
             svg.append('g')
               .attr('class', 'x axis')
@@ -91,7 +96,7 @@ angular.module('frontendApp')
           }
         }
 
-        console.log("SYMBOL: " + $scope.symbol);
+        console.log('SYMBOL: ' + $scope.symbol);
         StocksService.get($scope.symbol, $scope.start, $scope.end).success(function(data) {
           updateChart(data);
         });
