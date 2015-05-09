@@ -19,7 +19,8 @@ body {
 }
 
 .y.axis line {
-  stroke: lightgrey;
+  
+  stroke: none;
 }
 
 .x.axis .minor {
@@ -38,6 +39,7 @@ body {
   stroke-opacity: .5;
 }
 
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -46,9 +48,13 @@ body {
 }
 
 </style>
-<div class="flex-row">
-    <span ng-model="symbol">n/a</span>
+<div class="ticker-box">
+
+    <div class="ticker-header">
+      <span class="subtitle align-left">{{symbol}}</span>
+      <span class="close align-right">${{close | number:2}}</span>
+    </div>
     <br>
     <!--<span ng-model="string-close">n/a</span>-->
-    <div><svg id="graph"></svg></div>
+    <div><svg class='graph' id='id-test'></svg></div>
 </div>

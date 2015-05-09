@@ -1,11 +1,11 @@
 'use strict';
 
-var data = {
-  assets: [
-    {symbol: 'AAPL', votes: 13},
-    {symbol: 'TWTR', votes: 21}
-  ]
-};
+var assets = [
+    {symbol: 'YELP', votes: 13},
+    {symbol: 'GOOG', votes: 8},
+    {symbol: 'AAPL', votes: 4},
+    {symbol: 'NFLX', votes: 3}
+];
 
 /**
  * @ngdoc function
@@ -17,11 +17,8 @@ var data = {
 angular.module('frontendApp')
   .controller('PortfolioDetailCtrl', ['$scope', 'StocksService', '$routeParams', function ($scope, StocksService, $routeParams) {
 
-    StocksService.get().success(function(data) {
-      $scope.title = data;
-    });
 
     $scope.id = $routeParams.id;
-    $scope.test = 'test';
+    $scope.assets = assets;
 
   }]);

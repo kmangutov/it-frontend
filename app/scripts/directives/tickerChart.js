@@ -15,8 +15,32 @@ angular.module('frontendApp')
         start: '@',
         end: '@',
         legend: '=',
-        close: '=?'
+        close: '=?',
+        id: '@'
       },
+      /*link: function(scope, element) {
+        scope.$watch(function() {
+          return element.width();
+        },
+        function(newVal) {
+          scope.width = newVal;
+        }
+      },*/
+      link: function(scope, element) {
+
+        var graphElem = element[0].querySelector('.graph');
+
+        var rngString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+
+        graphElem.id = rngString;
+        scope.graphId = graphElem.id;
+        
+        //console.log("tagName: " + graphElem.tagName);
+        /*for(var key in element[0]) {
+          console.log("key: " + key);
+        }*/
+      },
+
       controller: ['$scope', 'StocksService', function($scope, StocksService) {
 
         $scope.close = $scope.close || false;
@@ -28,7 +52,7 @@ angular.module('frontendApp')
         console.log("start: " + $scope.start);*/
 
         // Set the dimensions of the graph
-        var margin = {top: 30, right: 40, bottom: 30, left: 50},
+        var margin = {top: 10, right: 10, bottom: 10, left: 40},
             width = $scope.width - margin.left - margin.right,
             height = $scope.height - margin.top - margin.bottom;
 
@@ -50,9 +74,16 @@ angular.module('frontendApp')
             .y(function(d) { return y(d.high); });
 
 
+        var updateClose = function(data) {
+
+          var array = data.query.results.quote;
+          $scope.close = array[array.length - 1].Close;
+        }
+
         var updateChart = function(data) {
 
-          var svg = d3.select('svg')
+          var svg = //$scope.graphElem
+            d3.select('#' + $scope.graphId)
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
             .append('g')
@@ -77,28 +108,29 @@ angular.module('frontendApp')
 
           if($scope.legend) {
 
-            svg.append('g')
+            /*svg.append('g')
               .attr('class', 'x axis')
               .attr('transform', 'translate(0, ' + height + ')')
-              .call(xAxis);
+              .call(xAxis);*/
 
             svg.append('g')
               .attr('class', 'y axis')
               .call(yAxis);
 
-            svg.append('text')
+            /*svg.append('text')
               .attr('class', 'stock')
               .attr('x', width / 2)
               .attr('y', margin.top / 2)
               .attr('text-anchor', 'middle')
               .style('font-size', '16px')
-              .text($scope.symbol);
+              .text($scope.symbol);*/
           }
         }
 
         console.log('SYMBOL: ' + $scope.symbol);
         StocksService.get($scope.symbol, $scope.start, $scope.end).success(function(data) {
           updateChart(data);
+          updateClose(data);
         });
 
       }]
