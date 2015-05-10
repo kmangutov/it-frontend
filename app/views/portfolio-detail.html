@@ -1,8 +1,6 @@
-<h1 class="title">Portfolio {{id}}</h1>
+<h1 class="title" ng-init="init()">Portfolio {{id}}</h1>
 
 <div>
-
-
 
 <div ng-repeat="asset in assets">
 
@@ -13,10 +11,9 @@
      
         <br><br><br><br>   
         <center>
-          <i class="fa fa-arrow-up fa-4x"></i>
-          <br>
-          <br>
-          <i class="fa fa-arrow-down fa-4x"></i>
+          <i class="fa fa-arrow-up fa-4x" ng-click="upvote(asset._id)"></i>
+          <h3>{{asset.votes}}</h3>
+          <i class="fa fa-arrow-down fa-4x" ng-click="downvote(asset._id)"></i>
         </center>
      
       </div>
