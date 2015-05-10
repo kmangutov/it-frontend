@@ -35,19 +35,29 @@ angular.module('frontendApp')
       })
     }
 
-    $scope.upvote = function(id) {
+
+    $scope.vote = function(type, id) {
       var up_data = '{"asset":\"' +id+ '\","user":"_kirill_dude_"}';
-      console.log(id);
-      PortfolioService.upvote(up_data).success(function(data) {
+      
+      var func = PortfolioService.upvote;
+      if(type === 'down')
+        func = PortfolioService.downvote;
 
-      })
-    };
+      console.log(type + 'vote called for _id: ' + id);
+      func(up_data).success(function(data) {
+        data = data.data;
+        console.log('Received ' + type + ' vote response: ' + JSON.stringify(data));
 
-    $scope.downvote = function(id) {
-      var down_data = '{"asset":\"' +id+ '\","user":"_kirill_dude_"}';
-      console.log(id);
-      PortfolioService.downvote(down_data).success(function(data) {
+        for(var i = 0; i < $scope.assets.length; i++) {
 
+          var asset = $scope.assets[i];
+
+          if(asset._id === data._id) {
+            console.log("Found asset _id: " + asset._id);
+            $scope.assets[i].upvotes = data.upvotes;
+            $scope.assets[i].downvotes = data.downvotes;
+          }
+        }
       })
     };
 
