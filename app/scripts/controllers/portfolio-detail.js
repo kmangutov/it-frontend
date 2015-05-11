@@ -32,8 +32,9 @@ angular.module('frontendApp')
 
     $scope.addAsset = function() {
       var symbol = $scope.symbol;
+      var user = "_kirill_dude_";
 
-      AssetService.post($routeParams.id, symbol).success(function(data) {
+      AssetService.post($routeParams.id, user, symbol).success(function(data) {
         $scope.assets.push(data.data);
       })
     }
@@ -51,12 +52,20 @@ angular.module('frontendApp')
         data = data.data;
         console.log('Received ' + type + ' vote response: ' + JSON.stringify(data));
 
+
+
         for(var i = 0; i < $scope.assets.length; i++) {
 
           var asset = $scope.assets[i];
 
           if(asset._id === data._id) {
             console.log("Found asset _id: " + asset._id);
+
+            if(data.action === 'delete') {
+              $scope.assets.splice(i, 1);
+              return;
+            }
+
             $scope.assets[i].upvotes = data.upvotes;
             $scope.assets[i].downvotes = data.downvotes;
           }

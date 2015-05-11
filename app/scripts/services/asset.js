@@ -15,8 +15,9 @@ angular.module('frontendApp')
       return $http.get(baseUrl + '/portfolio/' + portfolio_id);
     }
 
-    this.post = function(portfolio_id, symbol) {
+    this.post = function(portfolio_id, user, symbol) {
       var data = {
+        user: user,
         symbol: symbol
       };
 
