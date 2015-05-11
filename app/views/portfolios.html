@@ -35,8 +35,16 @@
 </div>
 
 
-<div ng-repeat="portfolio in portfolios">
+<div ng-repeat="portfolio in portfolios | orderBy:'-capital'">
   <div class="bordered clickable" ng-click="openPortfolio(portfolio._id)">
-    <span class="subtitle" ng-bind="portfolio.name"></span>
+    <div class="row">
+      <div class="column small-12 medium-8">
+      <span class="subtitle" ng-bind="portfolio.name"></span>
+      </div>
+
+      <div class="column small-12 medium-4">
+        <span class="subtitle">${{portfolio.capital | number:2}} ({{portfolio.assets.length}} assets)</span>
+      </div>
+    </div>
   </div>
 </div>
