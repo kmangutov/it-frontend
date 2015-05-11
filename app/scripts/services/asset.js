@@ -12,7 +12,7 @@ angular.module('frontendApp')
     var baseUrl = 'http://localhost:3000/api';
 
     this.get = function(portfolio_id) {
-      return $http.get(baseUrl + '/portfolio/' + portfolio_id);
+      return $http.get(baseUrl + '/portfolio/' + portfolio_id + '/asset');
     }
 
     this.post = function(portfolio_id, user, symbol) {
@@ -21,7 +21,7 @@ angular.module('frontendApp')
         symbol: symbol
       };
 
-      var url = baseUrl + '/portfolio/' + portfolio_id;
+      var url = baseUrl + '/portfolio/' + portfolio_id + '/asset';
 
       console.log('Post to ' + url + ' data: ' + JSON.stringify(data));
 

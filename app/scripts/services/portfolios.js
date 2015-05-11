@@ -15,6 +15,10 @@ angular.module('frontendApp')
       return $http.get(baseUrl+'/portfolio');
     }
 
+    this.getOne = function(id) {
+      return $http.get(baseUrl + '/portfolio/' + id);
+    }
+
     this.create = function(vname, vcapital) {
 
       var data = {

@@ -22,21 +22,40 @@ angular.module('frontendApp')
     var portfolioId = $routeParams.id;
 
     $scope.init = function() {
+
+      PortfolioService.getOne(portfolioId).success(function(data) {
+
+        $scope.portfolio = data.data;
+      });
+
       AssetService.get(portfolioId).success(function(data) {
         $scope.assets = data.data;
+
+        $scope.sigma = 0;
+        data.data.forEach(function(asset) {
+          $scope.sigma += asset.upvotes.length - asset.downvotes.length;
+        });
+
       })
       .error(function(data) {
         $scope.assets = assets;
-      })
+      });
     };
 
     $scope.addAsset = function() {
       var symbol = $scope.symbol;
       var user = "_kirill_dude_";
 
+      console.log("add asset " + symbol + "," + user);
+
       AssetService.post($routeParams.id, user, symbol).success(function(data) {
+        console.log("response: " + JSON.stringify(data));
         $scope.assets.push(data.data);
+        $scope.sigma += 1;
       })
+      .error(function(data) {
+        console.log("error: " + JSON.stringify(data));
+      });
     }
 
 
@@ -63,11 +82,18 @@ angular.module('frontendApp')
 
             if(data.action === 'delete') {
               $scope.assets.splice(i, 1);
+              $scope.sigma -= 1;
               return;
             }
 
+            var sumBefore = $scope.assets[i].upvotes - $scope.assets[i].downvotes;
+
             $scope.assets[i].upvotes = data.upvotes;
             $scope.assets[i].downvotes = data.downvotes;
+
+            var sumNow = $scope.assets[i].upvotes - $scope.assets[i].downvotes;
+            var delta = sumNow - sumBefore;
+            $scope.sigma += delta;
           }
         }
       })

@@ -17,6 +17,12 @@ $color-gray: #707070;
   font-family: $font-secondary !important;
 }
 
+.mega-title {
+  @extend .font-primary;
+  font-size: 36px !important;
+  font-weight: 100;
+}
+
 .title {
 
   @extend .font-primary;
