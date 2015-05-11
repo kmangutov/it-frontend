@@ -28,5 +28,4 @@ angular.module('frontendApp')
       $location.url('/login');
     });
   };
-    }
-  });
+    })
