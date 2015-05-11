@@ -1,3 +1,33 @@
-<h1 class="title">my portfolios</h1>
+<h1 class="title" ng-init="init()">My portfolios</h1>
 
-<ticker-chart legend="false" width='400' height='200' symbol="TWTR" start="2014-01-11" end='2014-01-18'></ticker-chart>
+
+
+<a href="#" prevent-default data-reveal-id="myModal">Click Me For A Modal</a>
+
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <div>
+    <h2 id="modalTitle">Add a portfolio</h2>
+    <label>Portfolio Name
+      <input type="text" ng-placeholder="498RK Friends" ng-model="name">
+    </label>
+    <label>Portfolio Capital 
+      <div class="row collapse">
+        <div class="columns small-1">
+          <span class="prefix">$</span>
+        </div>
+        <div class="columns small-11">
+          <input type="text" ng-placeholder="500" ng-model="capital">
+        </div>
+      </div>
+    </label>
+    <a class="button" ng-click="addPortfolio()">Add</a>
+  </div>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+<div ng-repeat="portfolio in portfolios">
+  <div class="bordered clickable" ng-click="openPortfolio(portfolio._id)">
+    <span class="subtitle" ng-bind="portfolio.name"></span>
+  </div>
+</div>

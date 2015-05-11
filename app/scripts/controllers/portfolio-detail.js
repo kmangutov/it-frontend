@@ -15,12 +15,14 @@ var assets = [
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('PortfolioDetailCtrl', ['$scope', 'StocksService', '$routeParams', 'PortfolioService', function ($scope, StocksService, $routeParams, PortfolioService) {
+  .controller('PortfolioDetailCtrl', ['$scope', 'StocksService', '$routeParams', 'PortfolioService', 'AssetService', 
+    function ($scope, StocksService, $routeParams, PortfolioService, AssetService) {
 
     $scope.id = $routeParams.id;
+    var portfolioId = $routeParams.id;
 
     $scope.init = function() {
-      PortfolioService.get().success(function(data) {
+      AssetService.get(portfolioId).success(function(data) {
         $scope.assets = data.data;
       })
       .error(function(data) {
@@ -28,10 +30,11 @@ angular.module('frontendApp')
       })
     };
 
-    $scope.addSymbol = function(symbol) {
-      var symbol_data = '{"symbol":\"' +asset.symbol+ '\"}';
-      PortfolioService.post(symbol_data).success(function(data) {
-        $scope.init();
+    $scope.addAsset = function() {
+      var symbol = $scope.symbol;
+
+      AssetService.post($routeParams.id, symbol).success(function(data) {
+        $scope.assets.push(data.data);
       })
     }
 
@@ -39,12 +42,12 @@ angular.module('frontendApp')
     $scope.vote = function(type, id) {
       var up_data = '{"asset":\"' +id+ '\","user":"_kirill_dude_"}';
       
-      var func = PortfolioService.upvote;
+      var func = AssetService.upvote;
       if(type === 'down')
-        func = PortfolioService.downvote;
+        func = AssetService.downvote;
 
       console.log(type + 'vote called for _id: ' + id);
-      func(up_data).success(function(data) {
+      func(portfolioId, up_data).success(function(data) {
         data = data.data;
         console.log('Received ' + type + ' vote response: ' + JSON.stringify(data));
 

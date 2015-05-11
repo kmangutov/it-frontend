@@ -62,14 +62,26 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/services/stocks.js"></script>
         <script src="scripts/services/portfolios.js"></script>
+        <script src="scripts/services/asset.js"></script>
 
         <script src="scripts/directives/tickerChart.js"></script>
+        <script src="scripts/directives/preventDefault.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/portfolios.js"></script>
         <script src="scripts/controllers/portfolio-detail.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="http://d3js.org/d3.v3.min.js"></script>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation/foundation.reveal.js"></script>
+
+        <script type="text/javascript" >
+            $(window).load(function(e) {
+                $(document).foundation();
+            });
+        </script>
         <!-- endbuild -->
 </body>
 </html>

@@ -10,20 +10,28 @@
 angular.module('frontendApp')
   .service('PortfolioService', ['$http', function ($http) {
     var baseUrl = 'http://localhost:3000/api';
+
     this.get = function() {
       return $http.get(baseUrl+'/portfolio');
     }
 
-    this.post = function(symbol) {
-      return $http.post(baseUrl+'/portfolio', symbol);
+    this.create = function(vname, vcapital) {
+
+      var data = {
+        name: vname,
+        capital: vcapital
+      }
+
+      return $http.post(baseUrl + '/portfolio', data);
     }
 
-    this.upvote = function(up_data) {
-      return $http.post(baseUrl+'/portfolio/upvote', up_data);
-    }
+    this.delete = function(id) {
 
-    this.downvote = function(down_data) {
-      return $http.post(baseUrl+'/portfolio/downvote', down_data);
+      var data = {
+        _id: id
+      }
+
+      return $http.post(baseUrl + '/portfolio', data);
     }
 
 
