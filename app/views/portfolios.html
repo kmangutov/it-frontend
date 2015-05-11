@@ -1,14 +1,21 @@
-<h1 class="title" ng-init="init()">My portfolios</h1>
 
 
+<div class="row">
+  <div class="column medium-8 small-12"><h1 class="title" ng-init="init()">My portfolios</h1></div>
 
-<a href="#" prevent-default data-reveal-id="myModal">Click Me For A Modal</a>
+  <div class="column medium-4 small-12">
+    <div class="align-right"><a href="#" prevent-default data-reveal-id="myModal"><i class="fa fa-plus fa-3x"></i></a></div>
+  </div>
+</div>
+
+<!--
+<a href="#" prevent-default data-reveal-id="myModal">Click Me For A Modal</a>-->
 
 <div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   <div>
     <h2 id="modalTitle">Add a portfolio</h2>
     <label>Portfolio Name
-      <input type="text" ng-placeholder="498RK Friends" ng-model="name">
+      <input type="text" ng-placeholder="498RK Friends" ng-model="name" autofocus>
     </label>
     <label>Portfolio Capital 
       <div class="row collapse">
@@ -20,7 +27,9 @@
         </div>
       </div>
     </label>
-    <a class="button" ng-click="addPortfolio()">Add</a>
+    <a class="button" ng-click="addPortfolio()" onClick="javascript:$('.close-reveal-modal').click();">Add</a>
+
+
   </div>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

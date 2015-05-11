@@ -1,19 +1,28 @@
-<h1 class="title" ng-init="init()">Portfolio {{id}}</h1>
+<h1 class="title" ng-init="init()"></h1>
 
 
+<div class="row">
+  <div class="column medium-8 small-12">
+    <h1 class="title" ng-init="init()"><a href="/#/portfolios">portfolios</a> / {{ portfolio.name }} (${{ portfolio.capital }})</h1>
+  </div>
+
+  <div class="column medium-4 small-12">
+    <div class="align-right">
+      <a href="#" prevent-default data-reveal-id="myModal"><i class="fa fa-plus fa-3x"></i></a>
+    </div>
+  </div>
+</div>
 
 
-
-<a href="#" prevent-default data-reveal-id="myModal">Click Me For A Modal</a>
 
 <div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   <div>
     <h2 id="modalTitle">Add an asset</h2>
     <label>Symbol
-      <input type="text" ng-placeholder="AAPL" ng-model="symbol">
+      <input type="text" ng-placeholder="AAPL" ng-model="symbol" autofocus>
     </label>
    
-    <a class="button" ng-click="addAsset()">Add</a>
+    <a class="button" ng-click="addAsset()" onClick="javascript:$('.close-reveal-modal').click();">Add</a>
   </div>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
@@ -30,21 +39,25 @@
     <div class="bordered">
 
       <div class="row">
-        <div class="column small-12 medium-4">
+        <div class="column small-12 medium-3">
        
           <br><br><br>
           <center>
             <i class="fa fa-arrow-up fa-4x" ng-click="vote('up', asset._id)"></i>
             <h3>{{asset.upvotes.length - asset.downvotes.length}}</h3>
             <i class="fa fa-arrow-down fa-4x" ng-click="vote('down', asset._id)"></i>
+          <br><br>
+                    <h1 class="mega-title">${{ (asset.upvotes.length - asset.downvotes.length) / sigma * portfolio.capital | number:2 }}</h1>
           </center>
        
         </div>
-        <div class="column small-12 medium-8">
-      
+        <div class="column small-12 medium-9">
+          <center>
           <ticker-chart legend="true" width='350' height='200' symbol="{{asset.symbol}}"></ticker-chart>
-      
+          </center>
         </div>
+
+
       </div>
 
     </div>
