@@ -15,11 +15,23 @@ var assets = [
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('PortfolioDetailCtrl', ['$scope', 'StocksService', '$routeParams', 'PortfolioService', 'AssetService', 
-    function ($scope, StocksService, $routeParams, PortfolioService, AssetService) {
+  .controller('PortfolioDetailCtrl', ['$scope', 'StocksService', '$routeParams', 'PortfolioService', 'AssetService', 'NameService',
+    function ($scope, StocksService, $routeParams, PortfolioService, AssetService, NameService) {
 
     $scope.id = $routeParams.id;
     var portfolioId = $routeParams.id;
+    $scope.sigma = 1;
+
+    var calculateSigma = function() {
+        //$scope.sigma = 0;
+      var sigma = 0;
+
+      $scope.assets.forEach(function(asset) {
+        sigma += (asset.upvotes.length - asset.downvotes.length);
+      });
+      $scope.sigma = sigma;
+      console.log('sigma: ' + $scope.sigma);
+    }
 
     $scope.init = function() {
 
@@ -30,12 +42,7 @@ angular.module('frontendApp')
 
       AssetService.get(portfolioId).success(function(data) {
         $scope.assets = data.data;
-
-        $scope.sigma = 0;
-        data.data.forEach(function(asset) {
-          $scope.sigma += asset.upvotes.length - asset.downvotes.length;
-        });
-
+        calculateSigma();
       })
       .error(function(data) {
         $scope.assets = assets;
@@ -44,14 +51,14 @@ angular.module('frontendApp')
 
     $scope.addAsset = function() {
       var symbol = $scope.symbol;
-      var user = "_kirill_dude_";
+      var user = NameService.get();
 
       console.log("add asset " + symbol + "," + user);
 
       AssetService.post($routeParams.id, user, symbol).success(function(data) {
         console.log("response: " + JSON.stringify(data));
         $scope.assets.push(data.data);
-        $scope.sigma += 1;
+        calculateSigma();
       })
       .error(function(data) {
         console.log("error: " + JSON.stringify(data));
@@ -60,14 +67,19 @@ angular.module('frontendApp')
 
 
     $scope.vote = function(type, id) {
-      var up_data = '{"asset":\"' +id+ '\","user":"_kirill_dude_"}';
+      //var up_data = '{"asset":\"' +id+ '\","user":"_kirill_dude_"}';
       
+      var data = {
+        asset: id,
+        user: NameService.get()
+      }
+
       var func = AssetService.upvote;
       if(type === 'down')
         func = AssetService.downvote;
 
       console.log(type + 'vote called for _id: ' + id);
-      func(portfolioId, up_data).success(function(data) {
+      func(portfolioId, data).success(function(data) {
         data = data.data;
         console.log('Received ' + type + ' vote response: ' + JSON.stringify(data));
 
@@ -82,19 +94,18 @@ angular.module('frontendApp')
 
             if(data.action === 'delete') {
               $scope.assets.splice(i, 1);
-              $scope.sigma -= 1;
+              calculateSigma();
+              
               return;
             }
 
-            var sumBefore = $scope.assets[i].upvotes - $scope.assets[i].downvotes;
 
             $scope.assets[i].upvotes = data.upvotes;
             $scope.assets[i].downvotes = data.downvotes;
 
-            var sumNow = $scope.assets[i].upvotes - $scope.assets[i].downvotes;
-            var delta = sumNow - sumBefore;
-            $scope.sigma += delta;
+            
           }
+          calculateSigma();
         }
       })
     };

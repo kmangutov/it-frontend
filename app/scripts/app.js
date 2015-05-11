@@ -16,7 +16,7 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     
 
     //================================================
@@ -64,10 +64,10 @@ angular
     });
 
     $routeProvider
-      .when('/', {
+      /*.when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      })
+      })*/
       .when('/portfolios', {
         templateUrl: 'views/portfolios.html',
         controller: 'PortfoliosCtrl'
@@ -76,19 +76,23 @@ angular
         templateUrl: 'views/portfolio-detail.html',
         controller: 'PortfolioDetailCtrl'
       })
-      .when('/about', {
+      /*.when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
-      .when('/singup', {
+      .when('/signup', {
         templateUrl: 'views/signup.html',
         controller: 'SignUpCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
+      })*/
+      .when('/name', {
+        templateUrl: 'views/name.html',
+        controller: 'NameCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/name'
       });
   });
