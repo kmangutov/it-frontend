@@ -1,0 +1,21 @@
+<div class="list" ng-controller='SignUpCtrl'>    
+  <form data-abide>
+  <div class="name-field">
+    <label>Your name <small>required</small>
+      <input ng-model="name" type="text" required pattern="[a-zA-Z]+">
+    </label>
+    <small class="error">Name is required and must be a string.</small>
+  </div>
+  <div>
+       <label for="password">Password</label>
+           <input ng-model="password" id="password" type="password" required="" name="password"></input>
+           <small class="error"></small>
+  </div>
+  <button ng-click = "addUser()" type="submit">Submit</button>
+
+</form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+    <p>Or go <a href="/">home</a>.</p>
+  <div> {{returnedMsg}} </div>
+</div>
+
